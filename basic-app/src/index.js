@@ -8,11 +8,14 @@ import Library from "./chapter_03/Library";
 import Clock from "./chapter_04/Clock";
 import CommentList from './chapter_05/CommentList';
 import NotificationList from './chapter_06/notificationList';
+import Counter from './chapter_07/counter';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 setInterval(()=>{
   root.render(
     <React.StrictMode>
-      <NotificationList />
+      <Counter />
+      {/* <NotificationList /> */}
       {/* <CommentList /> */}
       {/* <Library /> */}
       {/* <Clock /> */}
