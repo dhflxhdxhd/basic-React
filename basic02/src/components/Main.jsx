@@ -16,7 +16,7 @@ const Main = () => {
   return (
     <main>
       <h1>Main</h1>
-      <h2>{number + 10}</h2>
+      {/* <h2>{number + 10}</h2>
       <h2>{number % 2 === 0 ? "짝수" : "홀수"}</h2>
       <p>{10}</p>
       <p>{[1, 2, 3]}</p>
@@ -24,8 +24,8 @@ const Main = () => {
       <p>{null}</p>
       {obj.a}
       <div className="logout">
-        {user.isLogin ? <div>로그아웃</div> : <div>로그인</div>}
-      </div>
+        {user.isLogin ? <div>로그아웃</div> : <div>로그인</div>} */}
+      {/* </div> */}
     </main>
   );
 };
