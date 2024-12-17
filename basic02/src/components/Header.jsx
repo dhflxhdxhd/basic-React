@@ -1,4 +1,5 @@
-import Button from "./Button";
+import Button from "./Button/Button";
+
 const Header = () => {
   const buttonProps = {
     text: "카페",
