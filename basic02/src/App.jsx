@@ -1,15 +1,10 @@
 import "./App.css";
 import { useState } from "react";
-// import Header from "./components/Header";
-// import styles from "./components/Button/Button.module.css";
-import Bulb from "./components/Bulb";
-import Counter from "./components/Counter";
-
+import Register from "./components/Register";
 function App() {
   return (
     <>
-      <Bulb />
-      <Counter />
+      <Register />
     </>
   );
 }
