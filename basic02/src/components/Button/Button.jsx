@@ -1,18 +1,11 @@
-const Button = ({ backgroundColor = "#222", text = "click", children }) => {
-  const ButtonStyle = {
-    color: "white",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "16px",
-  };
+import styles from "./Button.module.css";
 
+const Button = ({ backgroundColor = "#222", text = "click", children }) => {
   const buttonStyle = {
     backgroundColor: backgroundColor,
-    ...ButtonStyle,
   };
 
+  console.log(styles);
   // 이벤트 객체
   const onClickButton = (event) => {
     console.log(event);
@@ -20,6 +13,7 @@ const Button = ({ backgroundColor = "#222", text = "click", children }) => {
   };
   return (
     <button
+      className={styles.button}
       style={buttonStyle}
       // onClick={() => {
       //   // 이벤트 핸들러 (익명 함수 or 선언식 함수)
