@@ -1,7 +1,13 @@
-const Button = ({ text = "+100" }) => {
+const Button = ({ text = "+100", onClickButton }) => {
   return (
     <>
-      <button>{text}</button>
+      <button
+        onClick={() => {
+          onClickButton();
+        }}
+      >
+        {text}
+      </button>
     </>
   );
 };

@@ -1,8 +1,10 @@
-const Viewer = ({ number }) => {
+import { useState } from "react";
+
+const Viewer = ({ count }) => {
   return (
     <div>
       <p>현재 카운트</p>
-      <h1>{number}</h1>
+      <h1>{count}</h1>
     </div>
   );
 };
