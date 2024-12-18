@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import styles from "./Button/Button.module.css";
 /*
 간단한 회원가입 폼
 1. 이름
@@ -8,11 +9,6 @@ import { useState, useEffect } from "react";
 */
 
 const Register = () => {
-  //   const [name, setName] = useState("김콜라");
-  //   const [birth, setBirth] = useState("2024-12-03");
-  //   const [nationality, setNationality] = useState("kr");
-  //   const [bio, setBio] = useState("");
-
   const [userInfo, setUserInfo] = useState({
     name: "",
     birth: "",
@@ -20,38 +16,55 @@ const Register = () => {
     bio: "",
   });
 
-  console.log(userInfo);
+  const refObj = useRef(0);
+  const countRef = useRef(0);
+  const inputRef = useRef({});
+  // console.log(refObj); // {current: undefined}, {current: 0};
+  // console.log(refObj.current);
 
   // 비슷한 이벤트핸들러를 하나의 통합된 핸들러로 사용
   const onChange = (event) => {
+    countRef.current++;
+    console.log(countRef.current);
     console.log(event);
+    // 동적 key 값을 객체에 설정
     setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
   };
 
-  //   const onChangeName = (event) => {
-  //     setUserInfo({ ...userInfo, name: event.target.value });
-  //   };
+  const onSubmit = () => {
+    // console.log(inputRef.current);
 
-  //   const onChangeBirth = (event) => {
-  //     setUserInfo({ ...userInfo, birth: event.target.value });
-  //   };
-
-  //   const onChangeNationality = (event) => {
-  //     setUserInfo({ ...userInfo, nationality: event.target.value });
-  //   };
-
-  //   const onChangeBio = (event) => {
-  //     setUserInfo({ ...userInfo, bio: event.target.value });
-  //   };
-
-  //   useEffect(() => {
-  //     console.log(birth);
-  //   }, [birth]);
+    if (userInfo.name === "") {
+      // 이름을 입력하는 DOM 요소에 포커스
+      inputRef.current["name"].focus();
+    } else if (userInfo.birth === "") {
+      inputRef.current["birth"].focus();
+    } else if (userInfo.nationality === "") {
+      inputRef.current["nationality"].focus();
+    } else if (userInfo.bio === "") {
+      inputRef.current["bio"].focus();
+    }
+  };
 
   return (
     <div>
+      <button
+        className={styles.button}
+        onClick={() => {
+          refObj.current++;
+          console.log(refObj.current);
+        }}
+      >
+        {/* ref+1 */}
+        {/* 리렌더링을 유발하지 않음. 따라서 화면 단 변화 x */}
+        {refObj.current}
+      </button>
       <div>
         <input
+          ref={(element) => {
+            console.log(element);
+            inputRef.current["name"] = element;
+          }}
           type="text"
           name="name"
           value={userInfo.name}
@@ -61,6 +74,9 @@ const Register = () => {
       </div>
       <div>
         <input
+          ref={(element) => {
+            inputRef.current["birth"] = element;
+          }}
           type="date"
           name="birth"
           value={userInfo.birth}
@@ -71,6 +87,9 @@ const Register = () => {
         {/* select box는 option 요소의 value 속성을 기반으로 값을 인식.
         즉, value 값을 제어하고 업데이트하는 방식 */}
         <select
+          ref={(element) => {
+            inputRef.current["nationality"] = element;
+          }}
           name="nationality"
           defaultValue={userInfo.nationality}
           onChange={onChange}
@@ -83,11 +102,18 @@ const Register = () => {
       </div>
       <div>
         <textarea
+          ref={(element) => {
+            inputRef.current["bio"] = element;
+          }}
           value={userInfo.bio}
           name="bio"
           onChange={onChange}
         ></textarea>
       </div>
+
+      <button className={styles.button} onClick={onSubmit}>
+        제출
+      </button>
     </div>
   );
 };
