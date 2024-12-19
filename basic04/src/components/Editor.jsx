@@ -1,7 +1,7 @@
 import "./Editor.css";
 import { useState } from "react";
 const Editor = ({ onCreate }) => {
-  const [todo, setTodo] = useState(null);
+  const [todo, setTodo] = useState();
 
   const writeTodo = (event) => {
     setTodo(event.target.value);
@@ -27,7 +27,7 @@ const Editor = ({ onCreate }) => {
     <div className="Editor">
       <input
         placeholder="할 일을 적어주세요"
-        value={todo}
+        value={todo || ""}
         onChange={writeTodo}
         onKeyDown={onEnterKeyDown}
       />
