@@ -1,11 +1,11 @@
 import "./List.css";
 
-const ListItem = () => {
+const ListItem = ({ todo }) => {
   return (
-    <div className="ListItem">
-      <input type="checkbox" />
-      <div className="content">잠자기</div>
-      <div className="content_date">2024.12.19</div>
+    <div className="ListItem" id={todo.id}>
+      <input type="checkbox" checked={todo.isDone} />
+      <div className="content">{todo.content}</div>
+      <div className="content_date">{todo.date}</div>
       <button>삭제</button>
     </div>
   );
