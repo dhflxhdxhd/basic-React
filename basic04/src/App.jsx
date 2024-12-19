@@ -1,18 +1,18 @@
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import Cookies from "js-cookie";
 import Header from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
-import { useState, useEffect, useRef } from "react";
 import { formatDate } from "./utils/dateFormatter";
+import useCookieState from "./hooks/useCookieState";
+import useFilteredTodos from "./hooks/useFilteredTodos";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useCookieState("todos", []);
   const [searchText, setSearchText] = useState("");
-  const [filteredTodos, setFilteredTodos] = useState([]);
+  const filteredTodos = useFilteredTodos(todos, searchText);
 
   const lastIdx = useRef(0);
-  const isMount = useRef(false);
 
   // 할 일 추가
   const onCreate = (content) => {
@@ -47,34 +47,9 @@ function App() {
     setSearchText(event.target.value);
   };
 
-  // mount
   useEffect(() => {
-    const savedTodos = Cookies.get("todos");
-    if (savedTodos) {
-      const parsedTodos = JSON.parse(savedTodos);
-      setTodos(parsedTodos);
-
-      lastIdx.current = parsedTodos.length > 0 ? parsedTodos[0].id + 1 : 0; // idx 값 초기화
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isMount.current) {
-      isMount.current = true;
-      return;
-    }
-    if (todos.length > 0) {
-      Cookies.set("todos", JSON.stringify(todos), { expires: 7 });
-    }
+    lastIdx.current = todos.length > 0 ? todos[0].id + 1 : 0; // idx 값 초기화
   }, [todos]);
-
-  useEffect(() => {
-    const searchTodos = todos.filter((todo) =>
-      todo.content.includes(searchText)
-    );
-
-    setFilteredTodos(searchTodos);
-  }, [searchText, todos]);
 
   return (
     <div className="App">
