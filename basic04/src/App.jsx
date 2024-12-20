@@ -5,16 +5,12 @@ import Editor from "./components/Editor";
 import List from "./components/List";
 import { formatDate } from "./utils/dateFormatter";
 import useCookieState from "./hooks/useCookieState";
-import useFilteredTodos from "./hooks/useFilteredTodos";
 
 function App() {
   const [todos, setTodos] = useCookieState("todos", []);
-  const [searchText, setSearchText] = useState("");
-  const filteredTodos = useFilteredTodos(todos, searchText);
-
   const lastIdx = useRef(0);
 
-  // 할 일 추가
+  // todo 생성
   const onCreate = (content) => {
     const newTodo = {
       id: lastIdx.current++,
@@ -26,6 +22,7 @@ function App() {
     setTodos([newTodo, ...todos]);
   };
 
+  // todo 선택 값 변경
   const onToggle = (id) => {
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
@@ -33,18 +30,12 @@ function App() {
 
     setTodos(updatedTodos);
   };
-  // 할 일 삭제
+  // todo 삭제
   const onDelete = (id) => {
-    console.log(id);
     const updateTodos = todos.filter((todo) => {
       return todo.id !== id;
     });
     setTodos(updateTodos);
-  };
-
-  // 할 일 검색
-  const onSearch = (event) => {
-    setSearchText(event.target.value);
   };
 
   useEffect(() => {
@@ -55,12 +46,7 @@ function App() {
     <div className="App">
       <Header />
       <Editor onCreate={onCreate} />
-      <List
-        todos={filteredTodos}
-        onDelete={onDelete}
-        onSearch={onSearch}
-        onToggle={onToggle}
-      />
+      <List todos={todos} onDelete={onDelete} onToggle={onToggle} />
     </div>
   );
 }
