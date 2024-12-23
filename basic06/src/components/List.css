@@ -1,0 +1,83 @@
+.List {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.List .title_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 20px 0;
+}
+
+.List h3 {
+  margin: 0;
+}
+
+.analyzed_container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.analyzed_container > div {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--grey-color);
+}
+
+.List > input {
+  width: 98%;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px 5px;
+  margin-bottom: 20px;
+}
+
+.List > input:focus {
+  border-bottom: 1px solid var(--primary-color);
+  outline: none;
+}
+
+.List > .content_container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ListItem */
+.ListItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ListItem input {
+  width: 20px;
+}
+
+.ListItem .content {
+  flex: 1;
+}
+
+.ListItem .content_date {
+  color: var(--grey-color);
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.ListItem button {
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.ListItem button:hover {
+  padding: 5px 12px;
+}
