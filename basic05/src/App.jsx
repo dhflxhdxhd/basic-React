@@ -4,17 +4,19 @@ import Header from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
 import { formatDate } from "./utils/dateFormatter";
-import useCookieState from "./hooks/useCookieState";
+import useCookieReducer from "./hooks/useCookieReducer";
 
 function App() {
-  const [todos, setTodos] = useCookieState("todos", []);
+  const [todos, dispatch] = useCookieReducer("todos", []);
   const lastIdx = useRef(0);
 
-  // todo 생성
+  // todo ID 초기화
   useEffect(() => {
+    console.log("[update] todos ID");
     lastIdx.current = todos.length > 0 ? todos[0].id + 1 : 0; // idx 값 초기화
-  }, [todos]);
+  }, []);
 
+  // todo 생성
   const onCreate = (content) => {
     const newTodo = {
       id: lastIdx.current++,
@@ -23,23 +25,26 @@ function App() {
       date: formatDate(new Date()),
     };
 
-    setTodos([newTodo, ...todos]);
+    dispatch({
+      type: "CREATE_TODO",
+      payload: newTodo,
+    });
   };
 
   // todo 선택 값 변경
   const onToggle = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
-    );
-
-    setTodos(updatedTodos);
+    dispatch({
+      type: "TOGGLE_TODO",
+      payload: id,
+    });
   };
+
   // todo 삭제
   const onDelete = (id) => {
-    const updateTodos = todos.filter((todo) => {
-      return todo.id !== id;
+    dispatch({
+      type: "DELETE_TODO",
+      payload: id,
     });
-    setTodos(updateTodos);
   };
 
   return (

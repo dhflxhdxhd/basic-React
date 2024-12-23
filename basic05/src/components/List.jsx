@@ -8,6 +8,7 @@ const List = ({ todos, onDelete, onToggle }) => {
   const onChangeSearch = (event) => {
     setSearchText(event.target.value);
   };
+
   return (
     <div className="List">
       <h3>To do</h3>
