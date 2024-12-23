@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import Header from "./components/Header";
+import MemoizedHeader from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
 import { formatDate } from "./utils/dateFormatter";
@@ -49,7 +49,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <MemoizedHeader />
       <Editor onCreate={onCreate} />
       <List todos={todos} onDelete={onDelete} onToggle={onToggle} />
     </div>

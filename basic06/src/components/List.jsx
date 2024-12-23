@@ -1,5 +1,5 @@
 import "./List.css";
-import ListItem from "./ListItem";
+import MemoizedListItem from "./ListItem";
 import { useState, useMemo } from "react";
 import useFilteredTodos from "../hooks/useFilteredTodos";
 const List = ({ todos, onDelete, onToggle }) => {
@@ -46,7 +46,7 @@ const List = ({ todos, onDelete, onToggle }) => {
         {filteredTodos.length > 0
           ? filteredTodos.map((todo, index) => {
               return (
-                <ListItem
+                <MemoizedListItem
                   key={todo.id}
                   todo={todo}
                   onDelete={onDelete}
