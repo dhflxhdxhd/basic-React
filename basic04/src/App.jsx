@@ -3,7 +3,6 @@ import "./App.css";
 import Header from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
-import Exam from "./components/Exam";
 import { formatDate } from "./utils/dateFormatter";
 import useCookieState from "./hooks/useCookieState";
 
@@ -45,10 +44,9 @@ function App() {
 
   return (
     <div className="App">
-      <Exam />
-      {/* <Header />
+      <Header />
       <Editor onCreate={onCreate} />
-      <List todos={todos} onDelete={onDelete} onToggle={onToggle} /> */}
+      <List todos={todos} onDelete={onDelete} onToggle={onToggle} />
     </div>
   );
 }
