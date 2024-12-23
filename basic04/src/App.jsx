@@ -11,6 +11,10 @@ function App() {
   const lastIdx = useRef(0);
 
   // todo 생성
+  useEffect(() => {
+    lastIdx.current = todos.length > 0 ? todos[0].id + 1 : 0; // idx 값 초기화
+  }, [todos]);
+
   const onCreate = (content) => {
     const newTodo = {
       id: lastIdx.current++,
@@ -37,10 +41,6 @@ function App() {
     });
     setTodos(updateTodos);
   };
-
-  useEffect(() => {
-    lastIdx.current = todos.length > 0 ? todos[0].id + 1 : 0; // idx 값 초기화
-  }, [todos]);
 
   return (
     <div className="App">
