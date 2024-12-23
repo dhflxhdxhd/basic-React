@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import "./App.css";
 import MemoizedHeader from "./components/Header";
 import Editor from "./components/Editor";
@@ -17,7 +17,7 @@ function App() {
   }, []);
 
   // todo 생성
-  const onCreate = (content) => {
+  const onCreate = useCallback((content) => {
     const newTodo = {
       id: lastIdx.current++,
       isDone: false,
@@ -29,23 +29,23 @@ function App() {
       type: "CREATE_TODO",
       payload: newTodo,
     });
-  };
+  }, []);
 
   // todo 선택 값 변경
-  const onToggle = (id) => {
+  const onToggle = useCallback((id) => {
     dispatch({
       type: "TOGGLE_TODO",
       payload: id,
     });
-  };
+  }, []);
 
   // todo 삭제
-  const onDelete = (id) => {
+  const onDelete = useCallback((id) => {
     dispatch({
       type: "DELETE_TODO",
       payload: id,
     });
-  };
+  }, []);
 
   return (
     <div className="App">

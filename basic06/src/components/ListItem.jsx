@@ -32,16 +32,19 @@ const ListItem = ({ todo, onDelete, onToggle }) => {
 };
 
 // 고차 컴포넌트
-const MemoizedListItem = memo(ListItem, (prevProps, nextProps) => {
-  if (
-    prevProps.todo.id !== nextProps.todo.id ||
-    prevProps.todo.content !== nextProps.todo.content ||
-    prevProps.todo.isDone !== nextProps.todo.isDone
-  ) {
-    return false; // 변경된 부분이 있으면 리렌더링
-  }
+// const MemoizedListItem = memo(ListItem, (prevProps, nextProps) => {
+//   if (
+//     prevProps.todo.id !== nextProps.todo.id ||
+//     prevProps.todo.content !== nextProps.todo.content ||
+//     prevProps.todo.isDone !== nextProps.todo.isDone ||
+//     prevProps.todo.date !== nextProps.todo.date
+//   ) {
+//     return false; // 변경된 부분이 있으면 리렌더링
+//   }
 
-  return true; // 변경된 부분이 없으면 리렌더링 하지 않음
-});
+//   return true; // 변경된 부분이 없으면 리렌더링 하지 않음
+// });
+
+const MemoizedListItem = memo(ListItem);
 
 export default MemoizedListItem;
