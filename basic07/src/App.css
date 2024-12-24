@@ -1,0 +1,20 @@
+:root {
+  --primary-color: #e7cccc;
+  --secondary-color: #ccb0b0;
+  --text-color: #222;
+  --grey-color: #666;
+  --border-color: rgb(220, 220, 220);
+  --white-color: #fff;
+}
+
+body {
+  color: var(--text-color);
+}
+
+.App {
+  width: 500px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
