@@ -1,0 +1,10 @@
+.place-container {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid var(--primary-color);
+  padding: 10px 0;
+}
+
+.place-image {
+  border-radius: 5px;
+}
