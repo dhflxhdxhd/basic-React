@@ -5,3 +5,7 @@ export const formatDate = (date) => {
     day: "2-digit",
   });
 };
+
+export const formatDateHeader = (date) => {
+  return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
+};

@@ -3,9 +3,7 @@ import { useContext } from "react";
 import Button from "../Button/Button";
 import DiaryListItem from "./DiaryListItem";
 import DiaryStateContext from "../../contexts/DiaryStateContext";
-const DiaryList = () => {
-  const diaries = useContext(DiaryStateContext);
-
+const DiaryList = ({ diaries }) => {
   return (
     <div className="diary-list">
       <div className="diary-list__title">
