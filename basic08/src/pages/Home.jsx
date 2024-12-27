@@ -8,10 +8,6 @@ const Home = () => {
         title={"Header"}
         rightChild={<Button text={"Right"} />}
       />
-      Home
-      <Button type={"default"} />
-      <Button type={"positive"} />
-      <Button type={"negative"} />
     </div>
   );
 };
