@@ -46,16 +46,19 @@
 }
 
 .diary-item__img1 {
-  background-color: #64c964;
+  background-color: var(--emotion1);
 }
 .diary-item__img2 {
-  background-color: #9dd672;
+  background-color: var(--emotion2);
 }
 .diary-item__img3 {
-  background-color: #fdce15;
+  background-color: var(--emotion3);
 }
 .diary-item__img4 {
-  background-color: #fd8345;
+  background-color: var(--emotion4);
+}
+.diary-item__img5 {
+  background-color: var(--emotion5);
 }
 
 .diary-item__content {

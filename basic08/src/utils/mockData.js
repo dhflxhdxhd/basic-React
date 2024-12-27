@@ -30,3 +30,26 @@ export const mockData = [
     content: "오징어 게임 2 봄",
   },
 ];
+
+export const EmotionList = [
+  {
+    id: 1,
+    name: "완전 좋음",
+  },
+  {
+    id: 2,
+    name: "좋음",
+  },
+  {
+    id: 3,
+    name: "그냥 그럼",
+  },
+  {
+    id: 4,
+    name: "별로임",
+  },
+  {
+    id: 5,
+    name: "최악",
+  },
+];

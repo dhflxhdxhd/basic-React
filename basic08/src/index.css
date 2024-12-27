@@ -9,6 +9,12 @@
   --white-color: #fff;
   --green-color: #5db996;
   --red-color: #fa7070;
+
+  --emotion1: #64c964;
+  --emotion2: #9dd672;
+  --emotion3: #fdce15;
+  --emotion4: #fd8345;
+  --emotion5: #fd565f;
 }
 
 @font-face {
@@ -21,6 +27,7 @@ body {
   margin: 0;
   width: 100%;
   background-color: rgb(246, 246, 246);
+  display: flex;
 }
 
 #root {

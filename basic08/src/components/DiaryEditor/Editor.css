@@ -1,0 +1,79 @@
+.diary-editor > section {
+  margin-bottom: 40px;
+}
+/* .diary-editor__date {
+  /* border: 1px solid black; */
+/* }  */
+
+.diary-editor__title {
+  margin: 20px 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.diary-editor__date > input {
+  background-color: var(--grey-color3);
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px 15px;
+}
+
+/* .diary-editor__emotion {
+  border: 1px solid rgb(174, 161, 161);
+} */
+
+.diary-editor__emotion-wrapper {
+  display: flex;
+  justify-content: space-around;
+  gap: 2%;
+}
+
+.diary-editor__content > textarea {
+  background-color: var(--grey-color3);
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: lighter;
+  padding: 20px;
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.diary-editor__button {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 오늘의 감정 아이템 */
+.emotion-item {
+  background-color: var(--grey-color3);
+  padding: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.emotion-item img {
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+.emotion_on1 {
+  background-color: var(--emotion1);
+}
+
+.emotion_on2 {
+  background-color: var(--emotion2);
+}
+.emotion_on3 {
+  background-color: var(--emotion3);
+}
+.emotion_on4 {
+  background-color: var(--emotion4);
+}
+.emotion_on5 {
+  background-color: var(--emotion5);
+}

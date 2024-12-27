@@ -12,7 +12,7 @@ const DiaryList = ({ diaries }) => {
 
   const nav = useNavigate();
   const onClickWriteBtn = () => {
-    nav(`/writ e`);
+    nav(`/write`);
   };
 
   const getSortedDiaries = () => {
