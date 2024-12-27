@@ -1,7 +1,22 @@
-import "./App.css";
-
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Write from "./pages/Write";
+import Diary from "./pages/Diary";
+import Notfound from "./pages/Notfound";
+/*
+1. "/" : 모든 일기를 조회하는 Home 페이지
+2. "/write" : 새로운 일기를 작성하는 Write 페이지
+3. "/diary" : 일기를 상세히 조회하는 Diary 페이지
+*/
 function App() {
-  return <div>감정일기장</div>;
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/write" element={<Write />} />
+      <Route path="/diary" element={<Diary />} />
+      <Route path="*" element={<Notfound />} />
+    </Routes>
+  );
 }
 
 export default App;
