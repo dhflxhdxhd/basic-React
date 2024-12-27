@@ -7,6 +7,9 @@ import Diary from "./pages/Diary";
 import Notfound from "./pages/Notfound";
 import Edit from "./pages/Edit";
 import { formatDate } from "./utils/dateFormatter";
+import DiaryStateContext from "./contexts/DiaryStateContext";
+import DiaryDispatchContext from "./contexts/DiaryDispatchContext";
+import { mockData } from "./utils/mockData";
 
 /*
 1. "/" : 모든 일기를 조회하는 Home 페이지
@@ -15,9 +18,6 @@ import { formatDate } from "./utils/dateFormatter";
 4. "/eidt" : 일기를 수정하는 페이지
 */
 // 임시 일기 배열 데이터
-
-const DiaryStateContext = createContext();
-const DiaryDispatchContext = createContext();
 
 function reducer(state, action) {
   switch (action.type) {
@@ -35,7 +35,7 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [diaries, dispatch] = useReducer(reducer, []);
+  const [diaries, dispatch] = useReducer(reducer, mockData);
   let idRef = useRef(3);
 
   useEffect(() => {
@@ -73,26 +73,6 @@ function App() {
 
   return (
     <>
-      {/* <button onClick={onWrite}>작성 테스트</button>
-      <button
-        onClick={() => {
-          onDelete(1);
-        }}
-      >
-        삭제 테스트
-      </button>
-      <button
-        onClick={() => {
-          onUpdate({
-            id: 1,
-            createDate: formatDate(new Date()),
-            emotionId: 3,
-            content: "수정테스트",
-          });
-        }}
-      >
-        수정 테스트
-      </button> */}
       <DiaryStateContext.Provider value={diaries}>
         <DiaryDispatchContext.Provider value={{ onWrite, onDelete, onUpdate }}>
           <Routes>
