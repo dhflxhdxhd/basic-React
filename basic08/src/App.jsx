@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Write from "./pages/Write";
 import Diary from "./pages/Diary";
@@ -9,13 +9,26 @@ import Notfound from "./pages/Notfound";
 3. "/diary" : 일기를 상세히 조회하는 Diary 페이지
 */
 function App() {
+  const nav = useNavigate();
+
+  const onClickButton = () => {
+    nav("/write");
+  };
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/write" element={<Write />} />
-      <Route path="/diary" element={<Diary />} />
-      <Route path="*" element={<Notfound />} />
-    </Routes>
+    <>
+      <div>
+        <Link to={"/"}>Home</Link>
+        <Link to={"/write"}>Write</Link>
+        <Link to={"/diary"}>Diary</Link>
+      </div>
+      <button onClick={onClickButton}>글 작성으로 이동</button>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/write" element={<Write />} />
+        <Route path="/diary/:id" element={<Diary />} />
+        <Route path="*" element={<Notfound />} />
+      </Routes>
+    </>
   );
 }
 
