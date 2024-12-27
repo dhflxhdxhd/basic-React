@@ -1,0 +1,18 @@
+.button {
+  background-color: var(--grey-color2);
+  color: var(--white-color);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.button_positive {
+  background-color: var(--green-color);
+}
+
+.button_negative {
+  background-color: var(--red-color);
+}

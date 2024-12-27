@@ -1,0 +1,40 @@
+:root {
+  --primary-color: #e7cccc;
+  --secondary-color: #ccb0b0;
+  --text-color: #222;
+  --grey-color: #666;
+  --grey-color2: #bcccdc;
+  --grey-color3: #e0e8f0;
+  --border-color: rgb(220, 220, 220);
+  --white-color: #fff;
+  --green-color: #5db996;
+  --red-color: #fa7070;
+}
+
+@font-face {
+  font-family: "NanumPenScript";
+  src: url("/NanumPenScript-Regular.ttf");
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  background-color: rgb(246, 246, 246);
+}
+
+#root {
+  background-color: var(--white-color);
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0px 20px;
+  min-height: 100vh;
+  height: 100%;
+  box-shadow: rgba(150, 150, 150, 0.15) 0px 0px 10px 0px;
+}
+
+body * {
+  font-family: NanumPenScript;
+  color: var(--text-color);
+}
