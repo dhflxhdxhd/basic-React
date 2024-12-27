@@ -16,12 +16,6 @@ function App() {
   };
   return (
     <>
-      <div>
-        <Link to={"/"}>Home</Link>
-        <Link to={"/write"}>Write</Link>
-        <Link to={"/diary"}>Diary</Link>
-      </div>
-      <button onClick={onClickButton}>글 작성으로 이동</button>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/write" element={<Write />} />
