@@ -4,27 +4,12 @@ import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
 import DiaryEditor from "../components/DiaryEditor/DiaryEditor";
 import DiaryDispatchContext from "../contexts/DiaryDispatchContext";
-import DiaryStateContext from "../contexts/DiaryStateContext";
+import useCurrentDiary from "../hooks/useCurrentDiary";
 const Edit = () => {
   const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
-  const diaries = useContext(DiaryStateContext);
   const params = useParams();
-  const [currentDiary, setCurrentDiary] = useState();
-
+  const currentDiary = useCurrentDiary(params.id);
   const nav = useNavigate();
-
-  useEffect(() => {
-    const currentDiary = diaries.find(
-      (diary) => String(diary.id) === String(params.id)
-    );
-
-    if (!currentDiary) {
-      window.alert("존재하지 않는 일기입니다.");
-      nav("/", { replace: true });
-    }
-
-    setCurrentDiary(currentDiary);
-  }, [params.id]);
 
   const onClickDoneBtn = (diary) => {
     onUpdate(diary);
