@@ -6,12 +6,18 @@ import { EmotionList } from "../../utils/mockData";
 import Button from "../Button/Button";
 import DiaryDispatchContext from "../../contexts/DiaryDispatchContext";
 import { getStringDate } from "../../utils/dateFormatter";
-const DiaryEditor = ({ onSubmit }) => {
+const DiaryEditor = ({ initData, onSubmit }) => {
   const [diary, setDiary] = useState({
     createDate: new Date(),
     emotionId: 1,
     content: "",
   });
+
+  useEffect(() => {
+    if (initData) {
+      setDiary(initData);
+    }
+  }, [initData]);
 
   const nav = useNavigate();
   const clickCancelBtn = () => {
@@ -51,7 +57,6 @@ const DiaryEditor = ({ onSubmit }) => {
         <div className="diary-editor__title">오늘의 감정</div>
         <div className="diary-editor__emotion-wrapper">
           {EmotionList.map((emotion) => {
-            console.log(emotion);
             return (
               <EmotionItem
                 onClickEmotionItem={() =>
