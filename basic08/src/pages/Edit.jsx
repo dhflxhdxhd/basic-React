@@ -24,10 +24,11 @@ const Edit = () => {
     }
 
     setCurrentDiary(currentDiary);
-  }, [params.id, diaries]);
+  }, [params.id]);
 
   const onClickDoneBtn = (diary) => {
     onUpdate(diary);
+    nav("/", { replace: true });
   };
 
   const onClickPreBtn = () => {
