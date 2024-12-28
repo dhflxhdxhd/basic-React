@@ -33,23 +33,23 @@ export const mockData = [
 
 export const EmotionList = [
   {
-    id: 1,
+    emotionId: 1,
     name: "완전 좋음",
   },
   {
-    id: 2,
+    emotionId: 2,
     name: "좋음",
   },
   {
-    id: 3,
+    emotionId: 3,
     name: "그냥 그럼",
   },
   {
-    id: 4,
+    emotionId: 4,
     name: "별로임",
   },
   {
-    id: 5,
+    emotionId: 5,
     name: "최악",
   },
 ];

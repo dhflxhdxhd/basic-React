@@ -46,7 +46,7 @@ function App() {
   const onWrite = (diary) => {
     const newDiary = {
       id: idRef.current++,
-      createDate: new Date(),
+      createDate: diary.createDate,
       emotionId: diary.emotionId,
       content: diary.content,
     };
