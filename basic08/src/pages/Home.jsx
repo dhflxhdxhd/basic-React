@@ -25,7 +25,9 @@ const getMonthlyDiaries = (pivotDate, diaries) => {
   ).getTime();
 
   return diaries.filter(
-    (diary) => diary.createDate >= beginTime && diary.createDate <= endTime
+    (diary) =>
+      new Date(diary.createDate).getTime() >= beginTime &&
+      new Date(diary.createDate).getTime() <= endTime
   );
 };
 

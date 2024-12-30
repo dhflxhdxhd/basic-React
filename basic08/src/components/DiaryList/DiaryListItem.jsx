@@ -2,8 +2,9 @@ import "./DiaryList.css";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import getEmotionImage from "../../utils/getEmotionImage";
-import { formatDate } from "../../utils/dateFormatter";
+import { formatDate, getStringDate } from "../../utils/dateFormatter";
 const DiaryListItem = ({ diary }) => {
+  console.log(diary.createDate);
   const nav = useNavigate();
 
   const onClickDiaryItem = () => {
@@ -21,7 +22,7 @@ const DiaryListItem = ({ diary }) => {
         <img src={getEmotionImage(diary.emotionId)} alt="emotion" />
       </div>
       <div className="diary-item__content">
-        <div>{formatDate(diary.createDate)}</div>
+        <div>{getStringDate(diary.createDate)}</div>
         <div>{diary.content}</div>
       </div>
       <Button text="수정하기" onClickButton={onClickEditBtn} />
