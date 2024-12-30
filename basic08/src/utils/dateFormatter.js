@@ -13,7 +13,6 @@ export const formatDateHeader = (date) => {
 export const getStringDate = (targetDate) => {
   // 날짜 -> YYYY-MM-DD
 
-  console.log(targetDate);
   // targetDate = new Date();
   let year = targetDate.getFullYear();
   let month = targetDate.getMonth() + 1;
@@ -27,4 +26,8 @@ export const getStringDate = (targetDate) => {
     date = `0${date}`;
   }
   return `${year}-${month}-${date}`;
+};
+
+export const getStringToDate = (targetString) => {
+  return new Date(targetString);
 };

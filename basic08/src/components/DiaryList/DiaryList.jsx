@@ -1,5 +1,5 @@
 import "./DiaryList.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import DiaryListItem from "./DiaryListItem";
@@ -26,7 +26,6 @@ const DiaryList = ({ diaries }) => {
   };
 
   const sortedDiaries = getSortedDiaries();
-
   return (
     <div className="diary-list">
       <div className="diary-list__title">
