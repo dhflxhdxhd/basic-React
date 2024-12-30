@@ -5,13 +5,13 @@ import Button from "../components/Button/Button";
 import { getStringDate } from "../utils/dateFormatter";
 import useCurrentDiary from "../hooks/useCurrentDiary";
 import { useEffect } from "react";
+import usePageTitle from "../hooks/usePageTitle";
 
 const Diary = () => {
   const params = useParams();
   const currentDiary = useCurrentDiary(params.id);
   const nav = useNavigate();
-  console.log(currentDiary);
-
+  usePageTitle(`${params.id}번 일기`);
   const onClickPreBtn = () => {
     nav(-1, { replace: true });
   };
