@@ -5,11 +5,13 @@ import Button from "../components/Button/Button";
 import DiaryEditor from "../components/DiaryEditor/DiaryEditor";
 import DiaryDispatchContext from "../contexts/DiaryDispatchContext";
 import useCurrentDiary from "../hooks/useCurrentDiary";
+import usePageTitle from "../hooks/usePageTitle";
 const Edit = () => {
   const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
   const params = useParams();
   const currentDiary = useCurrentDiary(params.id);
   const nav = useNavigate();
+  usePageTitle(`${params.id}번 일기 수정하기`);
 
   const onClickDoneBtn = (diary) => {
     onUpdate(diary);

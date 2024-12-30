@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import EmotionItem from "./EmotionItem";
 import { EmotionList } from "../../utils/mockData";
 import Button from "../Button/Button";
-import DiaryDispatchContext from "../../contexts/DiaryDispatchContext";
 import { getStringDate } from "../../utils/dateFormatter";
 const DiaryEditor = ({ initData, onSubmit }) => {
   const [diary, setDiary] = useState({
