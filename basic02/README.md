@@ -125,3 +125,9 @@ const Button = ({ text, onClickButton }) => {
 - React의 **상태 관리(`useState`)**를 활용한 상태 변화 감지.
 - 컴포넌트 **재사용성**을 고려한 설계.
 - React의 **Props**를 통해 부모-자식 간 데이터 전달.
+
+  <br>
+
+## 🖼 프로젝트 미리보기
+
+![counterApp](https://github.com/user-attachments/assets/fd05e4d3-be75-4f91-b3db-e1d963c49f5e)
