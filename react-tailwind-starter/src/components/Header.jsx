@@ -1,11 +1,20 @@
-function Header() {
+import PropTypes from "prop-types";
+import Box from "./Box";
+
+function Header({ title = "제목을 입력해주세요" }) {
   return (
-    <div className="min-h-screen bg-blue-200 flex justify-center items-center">
-      <h1 className="bg-slate-800 text-lg md:text-base font-ownglyph_meet hover:font-ownglyph_park  text-blue-300 p-4 rounded-lg">
-        폰트 적용
+    <Box className={"mb-2 border-neutral-400 bg-neutral-400 m-2"}>
+      <h1 className="md:text-5xl text-3xl font-ownglyph_meet hover:font-yoonchild  text-neutral-100 py-4">
+        [ {title} ]를 알아보아요
       </h1>
-    </div>
+    </Box>
+    // <div className="flex justify-center items-center border-b-[1px] bg-neutral-500 mb-2">
+
+    // </div>
   );
 }
 
+Header.propTypes = {
+  title: PropTypes.string,
+};
 export default Header;

@@ -1,7 +1,11 @@
 import "./App.css";
-import Header from "./components/Header";
+import Flex from "./pages/Flex";
 function App() {
-  return <Header />;
+  return (
+    <>
+      <Flex />
+    </>
+  );
 }
 
 export default App;
