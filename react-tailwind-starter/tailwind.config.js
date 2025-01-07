@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        ownglyph_meet: ["Ownglyph_meetme-Rg", "sans-serif"],
+        ownglyph_park: ["Ownglyph_ParkDaHyun", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };
