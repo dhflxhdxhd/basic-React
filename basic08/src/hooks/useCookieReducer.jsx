@@ -34,6 +34,7 @@ function reducer(state, action) {
       throw new Error("[ERROR] unknown action type");
   }
 }
+
 const useCookieReducer = (key, initialValue) => {
   const [state, dispatch] = useReducer(reducer, initialValue, () => {
     return initCookieState(key, initialValue);
