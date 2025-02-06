@@ -3,11 +3,8 @@ const dbName = "itestDB";
 const storeName = "itestStore";
 const newData = { name: "back", type: "string" };
 const Itest = () => {
-  const [itestData, getAllData, addItestData, delAllData] = useIdbReducer(
-    dbName,
-    storeName,
-    []
-  );
+  const [itestData, getAllData, addItestData, delAllData, delData] =
+    useIdbReducer(dbName, storeName, []);
   // const [itestData, setItestData] = useState([]);
   // const [dbInstance, setDbInstance] = useState(null); // IDBPDatabase 타입
   // const itestId = useRef(0);
@@ -66,6 +63,15 @@ const Itest = () => {
       <p>Itest</p>
       <button onClick={() => addItestData({ ...newData })}>Add New Data</button>
       <button onClick={() => delAllData()}>delete all Data</button>
+      <button
+        onClick={() => {
+          if (itestData.length > 0) {
+            return delData(itestData[0].id);
+          }
+        }}
+      >
+        delete specific Data
+      </button>
       <ul>
         {itestData.map((item) => (
           <li key={item.id}>

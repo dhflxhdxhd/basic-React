@@ -15,6 +15,8 @@ function idbReducer(state, action) {
       return [...action.payload];
     case "DELETE_ALL_DATA":
       return [];
+    case "DELETE_DATA":
+      return state.filter((data) => data.id != action.payload.id);
     default:
       throw new Error("[idb] Error: unknown action type");
   }
@@ -80,11 +82,11 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
     try {
       const data = await store.getAll();
 
-      dispatch({ type: "SET_DATA", payload: data });
-
       transaction.oncomplete = async () => {
-        console.log("[idb] transaction completed getAllData");
         await transaction.done;
+        dispatch({ type: "SET_DATA", payload: data });
+
+        console.log("[idb] transaction completed getAllData");
       };
     } catch (error) {
       console.log("[idb] Error: idb getAllData failed", error);
@@ -107,10 +109,10 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
 
     try {
       const id = await store.add(data);
-      dispatch({ type: "ADD_DATA", payload: { ...data, id } });
 
       transaction.oncomplete = async () => {
         await transaction.done;
+        dispatch({ type: "ADD_DATA", payload: { ...data, id } });
       };
     } catch (error) {
       console.log("[idb] Error: add Data failed", error);
@@ -127,7 +129,7 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
    */
   const delAllData = async () => {
     if (!dbInstance) return;
-
+    if (state.length == 0) return;
     const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
 
     try {
@@ -135,8 +137,9 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
 
       transaction.oncomplete = async () => {
         console.log("[idb] transaction completed delAllData");
-        dispatch({ type: "DELETE_ALL_DATA", payload: null });
         await transaction.done;
+
+        dispatch({ type: "DELETE_ALL_DATA", payload: null });
       };
     } catch (error) {
       console.log("[idb] Error: delete all data failed", error);
@@ -147,9 +150,31 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
     };
   };
 
-  // const
+  const delData = async (id) => {
+    if (!dbInstance) return;
+    if (state.length == 0) return;
 
-  return [state, getAllData, addData, delAllData];
+    const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
+
+    try {
+      const request = await store.delete(id);
+
+      transaction.oncomplete = async () => {
+        console.log("[idb] transaction completed delData", request);
+        await transaction.done;
+
+        dispatch({ type: "DELETE_DATA", payload: { id } });
+      };
+    } catch (error) {
+      console.log("[idb] Error: delete specific data failed", error);
+    }
+
+    transaction.onerror = (event) => {
+      console.log("[idb] Error: idb transaction failed", event.target.error);
+    };
+  };
+
+  return [state, getAllData, addData, delAllData, delData];
 };
 
 export default useIdbReducer;
