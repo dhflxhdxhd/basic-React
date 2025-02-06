@@ -102,29 +102,30 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
    * @param {Object} data 저장할 데이터 객체
    * @returns {Promise<void>}
    */
-  const addData = async (data) => {
+  const addData = async (transaction, store, data) => {
     if (!dbInstance) return;
-
-    const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
 
     try {
       const id = await store.add(data);
-
-      transaction.oncomplete = async () => {
-        await transaction.done;
-        dispatch({ type: "ADD_DATA", payload: { ...data, id } });
-      };
+      dispatch({ type: "ADD_DATA", payload: { ...data, id } });
     } catch (error) {
       console.log("[idb] Error: add Data failed", error);
     }
-
-    transaction.onerror = (event) => {
-      console.log("[idb] Error: idb transaction failed", event.target.error);
-    };
   };
 
+  const addDataTemp = async (data) => {
+    if (!dbInstance) return;
+
+    const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
+    try {
+      const id = await store.add(data);
+      dispatch({ type: "ADD_DATA", payload: { ...data, id } });
+    } catch (error) {
+      console.log("[idb] Error: add Data failed", error);
+    }
+  };
   /**
-   * IndexedDB에 특정 store에 있는 모든 데이터를 삭제하는 함수
+   * 특정 store에 있는 모든 데이터를 삭제하는 함수
    * @returns {Promise<void>}
    */
   const delAllData = async () => {
@@ -150,23 +151,45 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
     };
   };
 
-  const delData = async (id) => {
+  /**
+   * 특정 store에 있는 특정 데이터를 삭제하는 함수
+   * @param {*} id
+   * @returns
+   */
+  const delData = async (transaction, store, limit) => {
     if (!dbInstance) return;
     if (state.length == 0) return;
 
+    try {
+      let count = state.length - limit + 1;
+      for (let temp of state) {
+        if (count == 0) break;
+        const request = store.delete(temp.id);
+        await request;
+        dispatch({ type: "DELETE_DATA", payload: { id: temp.id } });
+        count--;
+      }
+    } catch (error) {
+      console.log("[idb] Error: delete specific data failed", error);
+    }
+  };
+
+  const addDataWithLimit = async (data, limit) => {
+    if (!dbInstance) return;
     const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
 
     try {
-      const request = await store.delete(id);
+      if (state.length >= limit) {
+        await delData(transaction, store, limit);
+      }
 
-      transaction.oncomplete = async () => {
-        console.log("[idb] transaction completed delData", request);
-        await transaction.done;
+      await addData(transaction, store, data);
 
-        dispatch({ type: "DELETE_DATA", payload: { id } });
+      transaction.oncomplete = () => {
+        console.log("[idb] transaction completed addDataWithLimit");
       };
     } catch (error) {
-      console.log("[idb] Error: delete specific data failed", error);
+      console.log("[idb] Error: add Data With Limit failed", error);
     }
 
     transaction.onerror = (event) => {
@@ -174,7 +197,15 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
     };
   };
 
-  return [state, getAllData, addData, delAllData, delData];
+  return [
+    state,
+    getAllData,
+    addData,
+    delAllData,
+    delData,
+    addDataWithLimit,
+    addDataTemp,
+  ];
 };
 
 export default useIdbReducer;
