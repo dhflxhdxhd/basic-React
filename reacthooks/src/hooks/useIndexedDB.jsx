@@ -174,6 +174,12 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
     }
   };
 
+  /**
+   * 데이터베이스를 일정 개수로 유지하면서 데이터 추가하는 함수
+   * @param {*} data 추가할 데이터
+   * @param {*} limit 제한할 데이터 개수수
+   * @returns
+   */
   const addDataWithLimit = async (data, limit) => {
     if (!dbInstance) return;
     const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
