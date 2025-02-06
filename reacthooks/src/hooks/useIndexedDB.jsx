@@ -13,6 +13,8 @@ function idbReducer(state, action) {
       return [...state, action.payload];
     case "SET_DATA":
       return [...action.payload];
+    case "DELETE_ALL_DATA":
+      return [];
     default:
       throw new Error("[idb] Error: unknown action type");
   }
@@ -80,8 +82,9 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
 
       dispatch({ type: "SET_DATA", payload: data });
 
-      transaction.oncomplete = () => {
+      transaction.oncomplete = async () => {
         console.log("[idb] transaction completed getAllData");
+        await transaction.done;
       };
     } catch (error) {
       console.log("[idb] Error: idb getAllData failed", error);
@@ -118,7 +121,35 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
     };
   };
 
-  return [state, getAllData, addData];
+  /**
+   * IndexedDB에 특정 store에 있는 모든 데이터를 삭제하는 함수
+   * @returns {Promise<void>}
+   */
+  const delAllData = async () => {
+    if (!dbInstance) return;
+
+    const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
+
+    try {
+      await store.clear();
+
+      transaction.oncomplete = async () => {
+        console.log("[idb] transaction completed delAllData");
+        dispatch({ type: "DELETE_ALL_DATA", payload: null });
+        await transaction.done;
+      };
+    } catch (error) {
+      console.log("[idb] Error: delete all data failed", error);
+    }
+
+    transaction.onerror = (event) => {
+      console.log("[idb] Error: idb transaction failed", event.target.error);
+    };
+  };
+
+  // const
+
+  return [state, getAllData, addData, delAllData];
 };
 
 export default useIdbReducer;

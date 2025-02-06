@@ -3,7 +3,7 @@ const dbName = "itestDB";
 const storeName = "itestStore";
 const newData = { name: "back", type: "string" };
 const Itest = () => {
-  const [itestData, getAllData, addItestData] = useIdbReducer(
+  const [itestData, getAllData, addItestData, delAllData] = useIdbReducer(
     dbName,
     storeName,
     []
@@ -65,6 +65,7 @@ const Itest = () => {
     <div>
       <p>Itest</p>
       <button onClick={() => addItestData({ ...newData })}>Add New Data</button>
+      <button onClick={() => delAllData()}>delete all Data</button>
       <ul>
         {itestData.map((item) => (
           <li key={item.id}>
