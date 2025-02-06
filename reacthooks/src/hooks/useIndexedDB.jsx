@@ -45,7 +45,6 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
 
         console.log("[idb] idb initialized");
         setDbInstance(db);
-        await getAllData(db);
       } catch (error) {
         console.log("[idb] Error: idb initialized failed", error);
       }
@@ -54,21 +53,43 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
     initDB();
   }, []);
 
+  useEffect(() => {
+    if (dbInstance === null) return;
+    getAllData();
+  }, [dbInstance]);
+
+  const getTransactionAndStore = (storeName, mode) => {
+    const transaction = dbInstance.transaction(storeName, mode);
+    const store = transaction.objectStore(storeName);
+
+    return [transaction, store];
+  };
+
   /**
    * IndexedDB에서 전체 데이터를 가져오는 함수
    * @param {IDBDatabase} db 사용할 데이터베이스 인스턴스
    * @returns {Promise<void>}
    */
-  const getAllData = async (db) => {
-    if (!db) return;
+  const getAllData = async () => {
+    if (!dbInstance) return;
+
+    const [transaction, store] = getTransactionAndStore(storeName, "readonly");
 
     try {
-      const store = db.transaction(storeName).objectStore(storeName);
       const data = await store.getAll();
+
       dispatch({ type: "SET_DATA", payload: data });
+
+      transaction.oncomplete = () => {
+        console.log("[idb] transaction completed getAllData");
+      };
     } catch (error) {
-      console.log("[idb] Error: idb fetchData failed", error);
+      console.log("[idb] Error: idb getAllData failed", error);
     }
+
+    transaction.onerror = (event) => {
+      console.log("[idb] Error: idb transaction failed", event.target.error);
+    };
   };
 
   /**
@@ -79,17 +100,22 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
   const addData = async (data) => {
     if (!dbInstance) return;
 
+    const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
+
     try {
-      const tx = dbInstance.transaction(storeName, "readwrite");
-      const store = tx.objectStore(storeName);
-
       const id = await store.add(data);
-      await tx.done;
-
       dispatch({ type: "ADD_DATA", payload: { ...data, id } });
+
+      transaction.oncomplete = async () => {
+        await transaction.done;
+      };
     } catch (error) {
       console.log("[idb] Error: add Data failed", error);
     }
+
+    transaction.onerror = (event) => {
+      console.log("[idb] Error: idb transaction failed", event.target.error);
+    };
   };
 
   return [state, getAllData, addData];

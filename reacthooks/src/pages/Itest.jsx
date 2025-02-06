@@ -1,22 +1,25 @@
-import { openDB } from "idb";
-import { useEffect, useState, useRef } from "react";
 import useIdbReducer from "../hooks/useIndexedDB";
-const TABLE_NAME = "itestD";
 const dbName = "itestDB";
 const storeName = "itestStore";
 const newData = { name: "back", type: "string" };
 const Itest = () => {
-  const [itestData, addItestData] = useIdbReducer(dbName, storeName, []);
+  const [itestData, getAllData, addItestData] = useIdbReducer(
+    dbName,
+    storeName,
+    []
+  );
   // const [itestData, setItestData] = useState([]);
   // const [dbInstance, setDbInstance] = useState(null); // IDBPDatabase 타입
-  const itestId = useRef(0);
+  // const itestId = useRef(0);
 
-  useEffect(() => {
-    itestId.current =
-      itestData.length === 0 ? 1 : itestData[itestData.length - 1].id + 1;
+  // useEffect(() => {
+  //   console.log(`[itestData changes] ${itestData}`);
+  //   itestId.current =
+  //     itestData.length === 0 ? 1 : itestData[itestData.length - 1].id + 1;
 
-    console.log(itestId.current);
-  }, [itestData]);
+  //   console.log(itestId.current);
+  // }, [itestData]);
+
   // useEffect(() => {
   //   const initDB = async () => {
   //     const db = await openDB(TABLE_NAME, 1, {
