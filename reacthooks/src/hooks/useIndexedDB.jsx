@@ -9,14 +9,14 @@ import { openDB } from "idb";
  */
 function idbReducer(state, action) {
   switch (action.type) {
-    case "ADD_DATA":
-      return [...state, action.payload];
     case "SET_DATA":
       return [...action.payload];
+    case "ADD_DATA":
+      return [...state, action.payload];
     case "DELETE_ALL_DATA":
       return [];
     case "DELETE_DATA":
-      return state.filter((data) => data.id != action.payload.id);
+      return state.filter((data) => !action.payload.ids.includes(data.id));
     default:
       throw new Error("[idb] Error: unknown action type");
   }
@@ -99,31 +99,27 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
 
   /**
    * IndexedDB에 새로운 데이터 (하나)를 추가하는 함수
-   * @param {Object} data 저장할 데이터 객체
-   * @returns {Promise<void>}
+   * @param {*} transaction
+   * @param {*} store
+   * @param {*} data 저장할 데이터 객체
+   * @returns
    */
-  const addData = async (transaction, store, data) => {
+  const addData = async (transaction = null, store = null, data) => {
     if (!dbInstance) return;
 
+    const [trans, storeInstance] =
+      transaction && store
+        ? [transaction, store]
+        : getTransactionAndStore(storeName, "readwrite");
+
     try {
-      const id = await store.add(data);
+      const id = await storeInstance.add(data);
       dispatch({ type: "ADD_DATA", payload: { ...data, id } });
     } catch (error) {
       console.log("[idb] Error: add Data failed", error);
     }
   };
 
-  const addDataTemp = async (data) => {
-    if (!dbInstance) return;
-
-    const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
-    try {
-      const id = await store.add(data);
-      dispatch({ type: "ADD_DATA", payload: { ...data, id } });
-    } catch (error) {
-      console.log("[idb] Error: add Data failed", error);
-    }
-  };
   /**
    * 특정 store에 있는 모든 데이터를 삭제하는 함수
    * @returns {Promise<void>}
@@ -153,34 +149,54 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
 
   /**
    * 특정 store에 있는 특정 데이터를 삭제하는 함수
-   * @param {*} id
+   * @param {*} transaction
+   * @param {*} store
+   * @param {*} limit 제한할 데이터 개수수
+   * @param {*} specificId 필수적으로 삭제할 값
    * @returns
    */
-  const delData = async (transaction, store, limit) => {
+  const delData = async (transaction, store, limit, delId = null) => {
     if (!dbInstance) return;
-    if (state.length == 0) return;
+    if (state.length === 0) return;
 
     try {
-      let count = state.length - limit + 1;
-      for (let temp of state) {
-        if (count == 0) break;
-        const request = store.delete(temp.id);
-        await request;
-        dispatch({ type: "DELETE_DATA", payload: { id: temp.id } });
-        count--;
+      let check = [];
+      let count = state.length - limit;
+      if (delId !== null) {
+        check = state.filter((item) => item.id === delId);
       }
+
+      if (check.length <= 0) {
+        count++;
+      }
+      const idsToDelete = state.slice(0, count).map((item) => item.id);
+      console.log(idsToDelete);
+      for (let id of idsToDelete) {
+        const request = store.delete(id);
+        await request;
+      }
+
+      if (delId != null) idsToDelete.push(delId);
+
+      dispatch({ type: "DELETE_DATA", payload: { ids: idsToDelete } });
     } catch (error) {
-      console.log("[idb] Error: delete specific data failed", error);
+      console.log("[idb] Error: delete data failed", error);
     }
   };
 
-  const addDataWithLimit = async (data, limit) => {
+  /**
+   * 데이터베이스를 일정 개수로 유지하면서 데이터 추가하는 함수
+   * @param {*} data 추가할 데이터
+   * @param {*} limit 제한할 데이터 개수수
+   * @returns
+   */
+  const addDataWithLimit = async (data, limit, delId = null) => {
     if (!dbInstance) return;
     const [transaction, store] = getTransactionAndStore(storeName, "readwrite");
 
     try {
       if (state.length >= limit) {
-        await delData(transaction, store, limit);
+        await delData(transaction, store, limit, delId);
       }
 
       await addData(transaction, store, data);
@@ -197,15 +213,7 @@ const useIdbReducer = (dbName, storeName, initialValue) => {
     };
   };
 
-  return [
-    state,
-    getAllData,
-    addData,
-    delAllData,
-    delData,
-    addDataWithLimit,
-    addDataTemp,
-  ];
+  return [state, getAllData, addData, delAllData, delData, addDataWithLimit];
 };
 
 export default useIdbReducer;

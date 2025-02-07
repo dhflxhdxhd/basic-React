@@ -26,6 +26,6 @@ Basic React는 React 학습 과정을 담은 레포지터리입니다. 각각의
 
 <br>
 
-### 📚 개념 정리 문서
+### 📚 문서
 
-[React 학습 개념 정리 모음](https://dhflxhdxhd.notion.site/React-Docs-14669e6f0a7d8011a1a1c712c4b7281d?pvs=4)
+[React 학습 개념 정리](https://dhflxhdxhd.notion.site/React-Docs-14669e6f0a7d8011a1a1c712c4b7281d?pvs=4)
