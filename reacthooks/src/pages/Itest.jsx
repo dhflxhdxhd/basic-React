@@ -6,17 +6,18 @@ const Itest = () => {
   const [
     itestData,
     getAllData,
-    addItestData,
+    addData,
     delAllData,
     delData,
     addDataWithLimit,
-    addDataTemp,
   ] = useIdbReducer(dbName, storeName, []);
 
   return (
     <div>
       <p>Itest</p>
-      {/* <button onClick={() => addDataTemp({ ...newData })}>Add New Data</button> */}
+      <button onClick={() => addData(null, null, { ...newData })}>
+        Add New Data
+      </button>
       {/* <button onClick={() => delAllData()}>delete all Data</button>
       <button
         onClick={() => {
@@ -27,7 +28,7 @@ const Itest = () => {
       >
         delete specific Data
       </button> */}
-      <button onClick={() => addDataWithLimit(newData, 3)}>
+      <button onClick={() => addDataWithLimit(newData, 3, null)}>
         addDataWithLimit
       </button>
       <ul>
